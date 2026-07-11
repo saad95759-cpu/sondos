@@ -395,9 +395,9 @@
                 <div class="sizes-container">
                     <div class="size-box">
                         <div class="size-label">الحجم الكبير (L)</div>
-                        <div class="size-price">85 EGP</div>
+                        <div class="size-price">95 EGP</div>
                         <div class="action-wrap">
-                            <button class="btn-add" id="btn-add-tira-l" onclick="addToCart('tira-l', 'تيراميسو حجم كبير (L)', 85)">إضافة للطلب 🛒</button>
+                            <button class="btn-add" id="btn-add-tira-l" onclick="addToCart('tira-l', 'تيراميسو حجم كبير (L)', 95)">إضافة للطلب 🛒</button>
                             <div class="qty-controls" id="qty-ctrl-tira-l">
                                 <button class="btn-qty" onclick="changeQty('tira-l', -1)">-</button>
                                 <span class="qty-value" id="qty-val-tira-l">1</span>
@@ -407,9 +407,9 @@
                     </div>
                     <div class="size-box">
                         <div class="size-label">الحجم الوسط (M)</div>
-                        <div class="size-price">70 EGP</div>
+                        <div class="size-price">80 EGP</div>
                         <div class="action-wrap">
-                            <button class="btn-add" id="btn-add-tira-m" onclick="addToCart('tira-m', 'تيراميسو حجم وسط (M)', 70)">إضافة للطلب 🛒</button>
+                            <button class="btn-add" id="btn-add-tira-m" onclick="addToCart('tira-m', 'تيراميسو حجم وسط (M)', 80)">إضافة للطلب 🛒</button>
                             <div class="qty-controls" id="qty-ctrl-tira-m">
                                 <button class="btn-qty" onclick="changeQty('tira-m', -1)">-</button>
                                 <span class="qty-value" id="qty-val-tira-m">1</span>
@@ -419,9 +419,9 @@
                     </div>
                     <div class="size-box">
                         <div class="size-label">الحجم الصغير (S)</div>
-                        <div class="size-price">45 EGP</div>
+                        <div class="size-price">60 EGP</div>
                         <div class="action-wrap">
-                            <button class="btn-add" id="btn-add-tira-s" onclick="addToCart('tira-s', 'تيراميسو حجم صغير (S)', 45)">إضافة للطلب 🛒</button>
+                            <button class="btn-add" id="btn-add-tira-s" onclick="addToCart('tira-s', 'تيراميسو حجم صغير (S)', 60)">إضافة للطلب 🛒</button>
                             <div class="qty-controls" id="qty-ctrl-tira-s">
                                 <button class="btn-qty" onclick="changeQty('tira-s', -1)">-</button>
                                 <span class="qty-value" id="qty-val-tira-s">1</span>
@@ -663,7 +663,16 @@
         </button>
     </div>
 
-    <script>
+    
+<div id="branchModal" style="display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:99999;">
+<div style="background:#fff;max-width:340px;margin:12% auto;padding:20px;border-radius:16px;text-align:center;font-family:Cairo,sans-serif">
+<h3>اختر الفرع</h3>
+<button style="width:100%;padding:12px;margin:8px 0;background:#25D366;color:#fff;border:none;border-radius:10px;cursor:pointer" onclick="sendToBranch('201009018128')">عرب الرمل</button>
+<button style="width:100%;padding:12px;margin:8px 0;background:#25D366;color:#fff;border:none;border-radius:10px;cursor:pointer" onclick="sendToBranch('201122557140')">أجهور الرمل</button>
+<button style="width:100%;padding:10px;border:none;border-radius:10px;cursor:pointer" onclick="closeBranchModal()">إلغاء</button>
+</div></div>
+
+<script>
         // كائن السلة
         let cart = {};
 
@@ -723,25 +732,25 @@
         }
 
         // إرسال الطلب منسقاً تماماً بالـ Backticks لمنع أي خطأ برمجى
-        function sendToWhatsApp() {
-            let total = 0;
-            let message = "مرحبا بوباتي : 🥰\n";
-
-            for (let id in cart) {
-                let item = cart[id];
-                let itemTotal = item.price * item.qty;
-                total += itemTotal;
-                message += item.name + " (عدد " + item.qty + ") : " + itemTotal + " ج.م\n";
-            }
-
-            message += "تكلفة الطلب : " + total + " ج.م";
-
-            // ترميز النص ليتوافق مع الروابط بشكل آمن
-            let encodedMessage = encodeURIComponent(message);
-            let whatsappURL = "https://wa.me/201009018128?text=" + encodedMessage;
-            
-            window.open(whatsappURL, '_blank');
-        }
+        function sendToWhatsApp(){
+document.getElementById('branchModal').style.display='block';
+}
+function closeBranchModal(){
+document.getElementById('branchModal').style.display='none';
+}
+function sendToBranch(phone){
+let total=0;
+let message="مرحبا بوباتي : 🥰\\n";
+for(let id in cart){
+ let item=cart[id];
+ let itemTotal=item.price*item.qty;
+ total+=itemTotal;
+ message+=item.name+" (عدد "+item.qty+") : "+itemTotal+" ج.م\\n";
+}
+message+="تكلفة الطلب : "+total+" ج.م";
+closeBranchModal();
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(message),"_blank");
+}
     </script>
 
 </body>
